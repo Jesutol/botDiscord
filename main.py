@@ -1,7 +1,8 @@
+import os
 import discord
 from discord.ext import commands
 from datetime import date
-import os
+
 
 GTA6_RELEASE_DATE = date(2026, 11, 19)
 
