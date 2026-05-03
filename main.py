@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from datetime import date
-import config
+import os
 
 GTA6_RELEASE_DATE = date(2026, 11, 19)
 
@@ -31,4 +31,4 @@ async def on_ready():
     print( "Bot is ready!" )
     print('------')
 
-bot.run(config.TOKEN)
+bot.run(os.getenv('TOKEN'))   
