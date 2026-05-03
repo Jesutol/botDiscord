@@ -31,4 +31,4 @@ async def on_ready():
     print( "Bot is ready!" )
     print('------')
 
-bot.run(os.getenv('TOKEN'))   
+bot.run(os.getenv(TOKEN))   
