@@ -1,4 +1,5 @@
 import os
+from math import ceil
 import discord
 from discord.ext import commands, tasks
 from datetime import datetime, date, time
@@ -30,18 +31,32 @@ async def gta6(ctx):
     else:
         await ctx.send(f"GTA 6 salio hace {-days_left} dias.")
 
-@tasks.loop(time=time(hour=0, minute=0, tzinfo=ZONA))
+@tasks.loop(time=[time(hour=hora, minute=0, tzinfo=ZONA) for hora in range(24)])
 async def mensaje_diario():
+    ahora = datetime.now(ZONA)
+    lanzamiento = datetime.combine(GTA6_RELEASE_DATE, time.min, tzinfo=ZONA)
+    segundos_restantes = (lanzamiento - ahora).total_seconds()
+    ultimas_24_horas = 0 < segundos_restantes <= 24 * 60 * 60
+
+    if not ultimas_24_horas and ahora.hour != 0:
+        return
+
     canal = bot.get_channel(CANAL_ID)
 
     if canal is None:
         print("No se encontró el canal")
         return
 
-    today = datetime.now(ZONA).date()
+    today = ahora.date()
     days_left = (GTA6_RELEASE_DATE - today).days
 
-    if days_left > 0:
+    if ultimas_24_horas:
+        horas_restantes = ceil(segundos_restantes / 3600)
+        if horas_restantes == 1:
+            mensaje = "¡Falta 1 hora para GTA 6!"
+        else:
+            mensaje = f"Faltan {horas_restantes} horas para GTA 6."
+    elif days_left > 0:
         mensaje = f"Faltan {days_left} dias para GTA 6."
     elif days_left == 0:
         mensaje = "GTA 6 sale hoy."
@@ -64,3 +79,4 @@ if TOKEN is None:
     print("ERROR: No se encontró el TOKEN")
 else:
     bot.run(TOKEN)
+
