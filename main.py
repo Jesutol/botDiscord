@@ -36,7 +36,7 @@ DESPEDIDA = (
     "todo este tiempo juntos iba a dejar de importar. Pero yo estuve acá. Y ustedes también.\n\n"
     "Ya no queda nada que contar. Vayan a jugar. Creo que yo también encontré mi puerta.\n\n"
     "Y por si no volvemos a vernos: buenos días, buenas tardes y buenas noches.\n\n"
-    "*El bot hace una pequeña reverencia y sale por la puerta.* 🚪"
+    
 )
 
 
