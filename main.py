@@ -104,6 +104,9 @@ async def mensaje_diario():
     else:
         mensaje = mensaje_cuenta_regresiva(days_left)
 
+    if days_left == 0:
+        mensaje = f"@everyone\n\n{mensaje}"
+
     await canal.send(mensaje)
 
 @bot.event

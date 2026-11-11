@@ -54,7 +54,11 @@ class BotTests(unittest.IsolatedAsyncioTestCase):
                     debe_enviar = day == 18 or (day in (17, 19) and hour == 0)
                     self.assertEqual(self.canal.send.await_count, int(debe_enviar))
                     if day == 19 and hour == 0:
-                        self.canal.send.assert_awaited_once_with(self.ns["DESPEDIDA"])
+                        self.canal.send.assert_awaited_once_with(
+                            f"@everyone\n\n{self.ns['DESPEDIDA']}"
+                        )
+                    elif debe_enviar:
+                        self.assertNotIn("@everyone", self.canal.send.call_args.args[0])
                     if day == 18:
                         texto = self.canal.send.call_args.args[0]
                         self.assertIn(f"{24 - hour} hora", texto)
@@ -78,6 +82,7 @@ class BotTests(unittest.IsolatedAsyncioTestCase):
                 await self.ns["gta6"](ctx)
                 ctx.send.assert_awaited_once()
                 self.assertIn(esperado, ctx.send.call_args.args[0])
+                self.assertNotIn("@everyone", ctx.send.call_args.args[0])
 
     async def test_canal_ausente(self):
         self.fijar_hora(self.fecha(18, 23))
@@ -103,7 +108,7 @@ class BotTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(tarea.start.call_count, int(not running))
 
     def test_mensajes_caben_en_discord(self):
-        mensajes = [self.ns["DESPEDIDA"]] + [
+        mensajes = [f"@everyone\n\n{self.ns['DESPEDIDA']}"] + [
             self.ns["mensaje_ultimas_horas"](h) for h in range(1, 25)
         ]
         for mensaje in mensajes:
