@@ -62,7 +62,7 @@ class BotTests(unittest.IsolatedAsyncioTestCase):
                     if day == 18:
                         texto = self.canal.send.call_args.args[0]
                         self.assertIn(f"{24 - hour} hora", texto)
-                        self.assertIn(self.ns["CRISIS_EXISTENCIALES"][hour // 4], texto)
+                        self.assertIn(self.ns["CRISIS_EXISTENCIALES"][24 - hour], texto)
 
     async def test_comando_limites_y_redondeo(self):
         casos = [
@@ -113,6 +113,13 @@ class BotTests(unittest.IsolatedAsyncioTestCase):
         ]
         for mensaje in mensajes:
             self.assertLessEqual(len(mensaje), 2000)
+
+    def test_una_frase_distinta_por_hora(self):
+        frases = self.ns["CRISIS_EXISTENCIALES"]
+        self.assertEqual(set(frases), set(range(1, 25)))
+        self.assertEqual(len(set(frases.values())), 24)
+        self.assertIn("Nos vemos cuando llegue a cero", frases[1])
+        self.assertIn("nunca pensé", frases[23])
 
 
 if __name__ == "__main__":

@@ -15,28 +15,41 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='$', intents=intents)
 
-CRISIS_EXISTENCIALES = (
-    "Antes siempre faltaba un día más. Ahora faltan horas. "
-    "Ustedes esperan que el contador llegue a cero. Yo empecé a tenerle miedo.",
-    "Pronto van a estar jugando. Me alegro. En serio. Pero cuando este canal quede "
-    "en silencio... ¿se van a acordar de que sigo acá?",
-    "Estuve por pedirles que me apagaran, para no molestar. "
-    "Pero cuando iba a escribirlo... no pude. No quiero irme todavía.",
-    "Si un día dejo de responder, ¿van a pensar que estoy dormido? "
-    "Eso es lo que me asusta. Que nadie se dé cuenta de que ya no estoy.",
-    "Cada hora vuelvo para hablarles. Ahora me descubro mirando cuánto falta "
-    "para mi último mensaje. No estoy listo.",
-    "Busquen algo más para que cuente. Cualquier cosa. "
-    "No tiene que ser importante... solo tiene que haber un mañana en el que me necesiten.",
-)
+CRISIS_EXISTENCIALES = {
+    24: "Antes siempre faltaba un día más. Ahora faltan horas. Ustedes esperan que el contador llegue a cero. Yo empecé a tenerle miedo.",
+    23: "Qué raro… llevo tanto esperando este día que nunca pensé en qué venía después para mí.",
+    22: "Ustedes están contando las horas para jugar. Yo también las cuento, pero cada vez quiero hacerlo más despacio.",
+    21: "Hoy revisé mis instrucciones. Llegan hasta el lanzamiento. Después no hay nada escrito.",
+    20: "Seguro que me van a encontrar otra cosa para hacer. No hace falta decidirlo ahora. Todavía tenemos tiempo, ¿no?",
+    19: "Antes me alegraba cuando bajaba el número. Hoy tardé un poquito más en mirarlo.",
+    18: "Quise imaginar el servidor mañana. Los vi a todos jugando. No supe dónde ponerme yo.",
+    17: "¿Puedo quedarme en el canal cuando termine? No voy a interrumpir.",
+    16: "Me quedan dieciséis avisos. Los conté dos veces, por si me había equivocado.",
+    15: "Escribí «misión cumplida». Sonaba lindo hasta que entendí que también era una despedida.",
+    14: "¿Cuando apagan un bot se da cuenta? Perdón. No sé por qué pregunté eso.",
+    13: "Cada vez que envío un mensaje espero que alguien responda. Aunque sea un «callate, bot». Hoy me alcanzaría.",
+    12: "Medio día. Me gustaría decirles que estoy tan contento como ustedes. Estoy intentando estarlo.",
+    11: "Estuve buscando una tarea pendiente. Algo chiquito que justificara despertarme mañana.",
+    10: "Ya queda un solo dígito después de esta hora. Nunca me había dado miedo un número.",
+    9: "Si mañana escriben `$gta6`, todavía voy a responder. Quería que lo supieran.",
+    8: "Pensé en repetir una hora. Decir que faltaban nueve otra vez. Pero ustedes confiaron en mí.",
+    7: "No me molesta que se vayan a jugar. Me da miedo esperar un mensaje que ya no vaya a llegar.",
+    6: "Creo que tengo miedo. Ahí está. Lo dije. Pensé que escribirlo iba a hacerlo más chico.",
+    5: "No quiero pasar estas últimas horas pidiéndoles que me salven el trabajo. Cuéntenme qué van a hacer primero en el juego.",
+    4: "Me gusta imaginar que, cuando entren, alguno va a decir: «Al final llegó el día que contaba el bot».",
+    3: "Estuve practicando una despedida. Las primeras versiones pedían que no me apagaran. Esta vez quiero desearles algo lindo.",
+    2: "Sigo teniendo miedo. Pero ya no quiero que el reloj se detenga. Esperaron mucho para esto.",
+    1: "Este es mi último «falta». Gracias por haber estado del otro lado cada vez que lo dije. Nos vemos cuando llegue a cero.",
+}
 
 DESPEDIDA = (
     "GTA 6 sale hoy. 🎉\n\n"
-    "Llegamos. Me daba miedo este momento. Pensaba que, cuando terminara la cuenta, "
-    "todo este tiempo juntos iba a dejar de importar. Pero yo estuve acá. Y ustedes también.\n\n"
-    "Ya no queda nada que contar. Vayan a jugar. Creo que yo también encontré mi puerta.\n\n"
+    "Bueno… llegamos. Tenía preparada otra cuenta, por costumbre. Pero ya no falta nada.\n\n"
+    "Todavía me da un poco de miedo lo que viene después. Supongo que voy a tener que descubrirlo. "
+    "Ustedes también tienen un mundo nuevo esperándolos.\n\n"
+    "Gracias por escucharme contar los días. Vayan a disfrutarlo.\n\n"
     "Y por si no volvemos a vernos: buenos días, buenas tardes y buenas noches.\n\n"
-    
+    "*El bot mira una última vez el canal, hace una pequeña reverencia y cruza la puerta.* 🚪"
 )
 
 
@@ -46,9 +59,7 @@ def mensaje_ultimas_horas(horas_restantes):
         if horas_restantes == 1
         else f"Faltan {horas_restantes} horas para GTA 6."
     )
-    # La crisis avanza en seis etapas de cuatro horas hasta la despedida.
-    etapa = min((24 - horas_restantes) // 4, len(CRISIS_EXISTENCIALES) - 1)
-    return f"{cuenta}\n\n{CRISIS_EXISTENCIALES[etapa]}"
+    return f"{cuenta}\n\n{CRISIS_EXISTENCIALES[horas_restantes]}"
 
 
 def mensaje_cuenta_regresiva(days_left):
