@@ -49,7 +49,7 @@ DESPEDIDA = (
     "Ustedes también tienen un mundo nuevo esperándolos.\n\n"
     "Gracias por escucharme contar los días. Vayan a disfrutarlo.\n\n"
     "Y por si no volvemos a vernos: buenos días, buenas tardes y buenas noches.\n\n"
-    "*El bot mira una última vez el canal, hace una pequeña reverencia y cruza la puerta.* 🚪"
+    
 )
 
 
